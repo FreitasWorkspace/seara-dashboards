@@ -140,6 +140,7 @@ body {
 @media(max-width:768px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
 
 .kpi-card { padding: 16px 12px; }
+.kpi-card [data-action="toggle"] { z-index: 10; }
 .kpi-label { font-size: 11px; color: var(--text-2); font-weight: 500; margin-bottom: 4px; }
 .kpi-value { font-size: 22px; font-weight: 700; color: var(--text); }
 .kpi-value span { font-size: 13px; }
@@ -392,7 +393,7 @@ body {
             <span class="badge badge-blue">Parcial</span>
             <span class="chevron">▼</span>
           </div>
-          <div class="causa-detail">A queda de -13,5% em abril vs março pode ser </p>parcialmente explicada pela ressaca pós-Quaresma/Páscoa. Confirmar se o recuo foi pontual ou estrutural em maio.</div>
+          <div class="causa-detail">A queda de -13,5% em abril vs março pode ser parcialmente explicada pela ressaca pós-Quaresma/Páscoa. Confirmar se o recuo foi pontual ou estrutural em maio.</div>
         </div>
       </div>
     </div>
@@ -575,8 +576,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const header = this.querySelector('.plano-header');
     triggerRipple(e, header);
     this.classList.toggle('open');
-    const chev = this.querySelector('.chevron');
-    if(chev) chev.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : '';
+    const fontchev = this.querySelector('.chevron');
+    if(fontchev) fontchev.style.transform = this.classList.contains('open') ? 'rotate(180deg)' : '';
   });
   const reportBtn = document.getElementById('btn-report');
   if(reportBtn) {
