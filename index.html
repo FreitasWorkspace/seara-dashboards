@@ -11,17 +11,17 @@
 :root {
   --accent: #E8420A;
   --accent-soft: rgba(232,66,10,0.12);
-  --accent-glow: rgba(232,66,10,0.18);
-  --glass-bg: rgba(255,255,255,0.7);
-  --glass-border: rgba(255,255,255,0.9);
-  --glass-shadow: 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.95);
+  --accent-glow: rgba(232,66,10,0.25);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
   --radius: 24px;
   --radius-sm: 14px;
-  --transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  --transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --text: #1d1d1f;
   --text-2: #86868b;
   --text-3: #aeaeb2;
-  --signature-orange: rgba(232, 66, 10, 0.45);
+  --signature-orange: rgba(232, 66, 10, 0.5);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 body {
@@ -37,7 +37,6 @@ body {
   -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
   user-select: none !important;
   -webkit-user-select: none !important;
-  position: relative;
 }
 
 #gatekeeper {
@@ -52,7 +51,7 @@ body {
 }
 .login-box {
   background: var(--glass-bg);
-  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
+  backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
   border: 1px solid var(--glass-border);
   padding: 40px 30px;
   border-radius: var(--radius);
@@ -80,8 +79,8 @@ body {
   top: 16px; left: 50%; transform: translateX(-50%);
   width: calc(100% - 28px); max-width: 1100px;
   z-index: 1000;
-  background: rgba(255,255,255,0.75);
-  backdrop-filter: blur(30px) saturate(180%); -webkit-backdrop-filter: blur(30px) saturate(180%);
+  background: rgba(255,255,255,0.72);
+  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: 20px; padding: 10px; text-align: center;
   box-shadow: 0 4px 24px rgba(232,66,10,0.08);
@@ -98,7 +97,7 @@ body {
 
 .glass {
   background: var(--glass-bg);
-  backdrop-filter: blur(50px) saturate(190%); -webkit-backdrop-filter: blur(50px) saturate(190%);
+  backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius);
   box-shadow: var(--glass-shadow);
@@ -109,10 +108,16 @@ body {
   transition: var(--transition);
 }
 
-.glass.pulse-anim { animation: pulse 0.25s cubic-bezier(0.25, 1, 0.5, 1); }
-@keyframes pulse {
+/* INTERATIVIDADE GLASS EM TOUCH */
+.glass:hover {
+  border-color: rgba(232,66,10,0.25);
+  box-shadow: 0 12px 40px rgba(232,66,10,0.1);
+}
+
+.glass.pulse-anim { animation: pulseCard 0.25s cubic-bezier(0.25, 1, 0.5, 1); }
+@keyframes pulseCard {
   0% { transform: scale(1); }
-  50% { transform: scale(1.006); }
+  50% { transform: scale(1.008); }
   100% { transform: scale(1); }
 }
 
@@ -124,11 +129,11 @@ body {
 
 .ripple {
   position: absolute; border-radius: 50%;
-  background: rgba(232, 66, 10, 0.22);
+  background: rgba(232, 66, 10, 0.25);
   transform: scale(0); pointer-events: none;
   animation: ripple-effect 0.45s cubic-bezier(0.25, 1, 0.5, 1);
 }
-@keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
+@keyframes ripple-effect { to { transform: scale(4.5); opacity: 0; } }
 
 .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 @media(max-width:768px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } }
@@ -210,7 +215,7 @@ body {
 
 .report-section {
   margin-top: 32px; padding: 20px; background: var(--glass-bg);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid var(--glass-border); border-radius: var(--radius); border-top: 3px solid var(--accent);
 }
 .report-toggle { display: flex; align-items: center; justify-content: space-between; }
@@ -226,7 +231,7 @@ body {
   font-size: 11px;
   font-weight: 600;
   color: var(--signature-orange);
-  padding: 35px 0 15px;
+  padding: 40px 0 10px;
   letter-spacing: 0.04em;
   font-style: italic;
   width: 100%;
@@ -282,7 +287,7 @@ body {
       <div class="glass kpi-card" data-action="toggle">
         <div class="kpi-label">Potencial inexplorado</div>
         <div class="kpi-value">5.643<span> cli</span></div>
-        <div class="kpi-sub down" style="color:#FF3B30">ALP ativo · zero INN em abril</div>
+        <div class="kpi-sub down">!#FF3B30</div>
         <div class="kpi-detail">Clientes com ALP ativo que não compraram nenhum produto INN em abril. Se apenas 10% desses fossem convertidos, seriam +564 clientes INN novos.</div>
       </div>
       <div class="glass kpi-card" data-action="toggle">
@@ -320,7 +325,7 @@ body {
             <div class="pb-label"><span>Taxa cross-sell</span><span>16,8% · meta 30%</span></div>
             <div class="pb-track"><div class="pb-fill" style="width:56%"></div></div>
           </div>
-          <p style="font-size:12px;color:var(--text-2);margin-top:12px;line-height:1.6">Interior concentra 71% do volume INN mas tem a menor taxa de conversão. 4.889 clientes ALP sem nenhuma compra INN — maior potencial inexplorado.</p>
+          <p style="font-size:12px;color:var(--text-2);margin-top:12px;line-height:1.6">Interior concentra 71% do volume INN mas tem a menor taxa de conversão. 4.889 clientes ALP sem nenhuma compra INN — maior oportunidade.</p>
         </div>
       </div>
       <div class="glass farol-card" data-action="toggle">
@@ -522,6 +527,11 @@ function triggerRipple(e, element) {
   let clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
   let clientY = e.clientY || (e.touches && e.touches[0] ? e.touches[0].clientY : 0);
   
+  if (clientX === 0 && e.changedTouches && e.changedTouches[0]) {
+    clientX = e.changedTouches[0].clientX;
+    clientY = e.changedTouches[0].clientY;
+  }
+
   const x = clientX - rect.left;
   const y = clientY - rect.top;
   
@@ -588,16 +598,17 @@ function verifyPasskey() {
   if (input === ENCRYPTED_KEY) {
     gatekeeper.style.display = 'none';
     dashboard.style.display = 'block';
-    setTimeout(initChart, 50);
+    setTimeout(initChart, 60);
   } else {
     errorAlert.style.display = 'block';
   }
 }
 
 function initChart() {
-  const ctx = document.getElementById('chartEvolucao');
-  if (!ctx) return;
+  const canvasEl = document.getElementById('chartEvolucao');
+  if (!canvasEl) return;
   
+  const ctx = canvasEl.getContext('2d');
   new Chart(ctx, {
     type: 'bar',
     data: {
@@ -606,7 +617,7 @@ function initChart() {
         {
           label: 'Volume INN (t)',
           data: [30.5, 46.0, 62.0, 53.1],
-          backgroundColor: ['rgba(232,66,10,0.6)', 'rgba(232,66,10,0.7)', 'rgba(232,66,10,0.95)', 'rgba(232,66,10,0.5)'],
+          backgroundColor: ['rgba(232,66,10,0.65)', 'rgba(232,66,10,0.75)', 'rgba(232,66,10,0.95)', 'rgba(232,66,10,0.55)'],
           borderRadius: 10,
           borderSkipped: false,
           yAxisID: 'y'
@@ -616,11 +627,11 @@ function initChart() {
           data: [743, 1145, 1473, 1306],
           type: 'line',
           borderColor: '#007AFF',
-          backgroundColor: 'rgba(0,122,255,0.08)',
-          borderWidth: 2,
+          backgroundColor: 'rgba(0,122,255,0.06)',
+          borderWidth: 2.5,
           pointBackgroundColor: '#007AFF',
-          pointRadius: 5,
-          tension: 0.4,
+          pointRadius: 4,
+          tension: 0.35,
           fill: true,
           yAxisID: 'y1'
         }
@@ -634,8 +645,8 @@ function initChart() {
         legend: { labels: { font: { family: '-apple-system, sans-serif', size: 11 }, color: '#86868b' } }
       },
       scales: {
-        y: { position: 'left', grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, callback: v => v + 't' } },
-        y1: { position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { size: 11 } } },
+        y: { position: 'left', grid: { color: 'rgba(0,0,0,0.04)' }, ticks: { font: { size: 11 }, callback: function(v) { return v + 't'; } } },
+        y1: { position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { size: 11 }, color: '#007AFF' } },
         x: { grid: { display: false }, ticks: { font: { size: 11 } } }
       }
     }
