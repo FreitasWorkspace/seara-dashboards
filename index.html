@@ -18,16 +18,15 @@
   --radius-sm: 12px;
   --text: #1d1d1f;
   --text-2: #86868b;
-  --signature-orange: rgba(232, 66, 10, 0.4); /* Laranja ultra claro para assinatura */
+  --signature-orange: rgba(232, 66, 10, 0.45);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: #f5f5f7;
   min-height: 100vh;
-  padding: 100px 14px 60px;
+  padding: 100px 14px 40px;
   color: var(--text);
-  display: flex; flex-direction: column; /* Necessário para o rodapé fixo no final */
 }
 
 .kpi-card, .farol-card, .causa-card, .plano-item, .report-toggle, .login-btn {
@@ -71,7 +70,7 @@ body {
 }
 .error-msg { color: #FF3B30; font-size: 12px; font-weight: 600; margin-top: 10px; display: none; }
 
-#main-dashboard { display: none; flex: 1; /* Estica para empurrar o rodapé */ }
+#main-dashboard { display: none; }
 
 #header {
   position: fixed;
@@ -194,14 +193,13 @@ body {
 .report-block h3 { font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; margin-bottom: 4px; }
 .report-block p { font-size: 12px; color: var(--text-2); line-height: 1.6; }
 
-/* NOVA ASSINATURA PREMIUM CENTRALIZADA NO RODAPÉ */
 .footer-signature {
   text-align: center;
   font-size: 11px;
   font-weight: 600;
   color: var(--signature-orange);
-  padding: 30px 0 10px;
-  letter-spacing: 0.03em;
+  padding: 35px 0 15px;
+  letter-spacing: 0.04em;
   font-style: italic;
   width: 100%;
 }
@@ -266,6 +264,7 @@ body {
         <div class="kpi-detail">Trajetória positiva nos 3 primeiros meses: Jan 30,5t · Fev 46,0t · Mar 62,0t. Recuo em abril para 53,1t sinaliza necessidade de plano de manutenção.</div>
       </div>
     </div>
+
     <div class="section-title">Evolução Mensal — Volume INN e Clientes Ativos</div>
     <div class="glass chart-card">
       <div class="chart-title">Volume INN (toneladas) · Jan–Abr 2026</div>
@@ -273,6 +272,7 @@ body {
         <canvas id="chartEvolucao"></canvas>
       </div>
     </div>
+
     <div class="section-title">Farol por Diretoria</div>
     <div class="farol-grid">
       <div class="glass farol-card" data-action="toggle">
@@ -316,6 +316,7 @@ body {
         </div>
       </div>
     </div>
+
     <div class="section-title">Análise de Causa — Por que a evolução está tímida</div>
     <div class="glass" style="padding:8px">
       <div class="causa-grid" style="gap:0">
@@ -357,10 +358,11 @@ body {
             <span class="badge badge-blue">Parcial</span>
             <span class="chevron">▼</span>
           </div>
-          <div class="causa-detail">A queda de -13,5% em abril vs março pode ser parcialmente explicada pela ressaca pós-Quaresma/Páscoa — padrão observado em toda a regional INN. Confirmar se o recuo foi pontual ou estrutural em maio.</div>
+          <div class="causa-detail">A queda de -13,5% em abril vs março pode ser parcialmente explicada pela ressaca pós-Quaresma/Páscoa. Confirmar se o recuo foi pontual ou estrutural em maio.</div>
         </div>
       </div>
     </div>
+
     <div class="section-title">Distribuição por Canal</div>
     <div class="glass canal-card">
       <table class="canal-table">
@@ -407,6 +409,7 @@ body {
         </tbody>
       </table>
     </div>
+
     <div class="section-title">Plano de Aceleração</div>
     <div class="glass" style="padding:0;overflow:hidden">
       <div class="plano-item" data-action="plano">
@@ -455,6 +458,7 @@ body {
         <div class="plano-detail">Criar grupo com gerentes e diretores ALP e INN. Cadência: report semanal via WhatsApp toda segunda · reunião quinzenal de 30min · fechamento mensal com diretores. Matheus alimenta o dashboard toda segunda e quarta.</div>
       </div>
     </div>
+
     <div class="report-section">
       <div class="report-toggle" id="btn-report">
         <h2>📋 Report Executivo · Mai/2026</h2>
@@ -496,9 +500,7 @@ function setupInteraction(selector, callback) {
 document.addEventListener("DOMContentLoaded", function() {
   const submitBtn = document.getElementById('btn-submit');
   if(submitBtn) {
-    submitBtn.addEventListener('click', function() {
-      verifyPasskey();
-    });
+    submitBtn.addEventListener('click', function() { verifyPasskey(); });
   }
   document.getElementById('passkey').addEventListener('keydown', function(event) {
     if(event.key === 'Enter') verifyPasskey();
@@ -534,4 +536,57 @@ function verifyPasskey() {
     setTimeout(initChart, 50);
   } else {
     errorAlert.style.display = 'block';
-    document.getElementById('passkey
+  }
+}
+
+function initChart() {
+  const ctx = document.getElementById('chartEvolucao');
+  if (!ctx) return;
+  
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Jan', 'Fev', 'Mar', 'Abr'],
+      datasets: [
+        {
+          label: 'Volume (t)',
+          data: [30.5, 46.0, 62.0, 53.1],
+          borderColor: '#E8420A',
+          backgroundColor: 'rgba(232,66,10,0.08)',
+          borderWidth: 3,
+          pointBackgroundColor: '#E8420A',
+          pointRadius: 4,
+          tension: 0.2,
+          yAxisID: 'y'
+        },
+        {
+          label: 'Clientes Ativos',
+          data: [850, 1120, 1473, 1306],
+          borderColor: '#86868b',
+          backgroundColor: 'transparent',
+          borderWidth: 2,
+          pointBackgroundColor: '#86868b',
+          pointRadius: 3,
+          borderDash: [4, 4],
+          tension: 0.2,
+          yAxisID: 'y1'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: true, position: 'top', labels: { boxWidth: 12, font: { size: 11 } } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Toneladas', font: { size: 10 } }, ticks: { font: { size: 10 } }, grid: { color: 'rgba(0,0,0,0.03)' } },
+        y1: { type: 'linear', display: true, position: 'right', title: { display: true, text: 'Clientes', font: { size: 10 } }, ticks: { font: { size: 10 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
